@@ -1,0 +1,19 @@
+{
+  "name": "MULTISig",
+  "version": "1.0.0",
+  "description": "Multis' GSN-enabled multisignature smart contracts",
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "",
+  "devDependencies": {
+    "@openzeppelin/contracts-ethereum-package": "2.4.0",
+    "@openzeppelin/gsn-helpers": "^0.2.0",
+    "@openzeppelin/upgrades": "^2.5.3",
+    "dotenv": "^8.1.0",
+    "truffle-hdwallet-provider": "^1.0.17"
+  },
+  "engines": {
+    "node": "11.2.0"
+  }
+}
