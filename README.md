@@ -22,9 +22,10 @@ init openzeppelin project
 ```
 $ openzeppelin init
 ```
-add the optimizer compiler settings inside of `"compiler"` key in `project.json`
 
-```
+add the optimizer compiler settings inside of `compiler` key in `project.json` like the following: 
+
+```json
 {
   "manifestVersion": "2.2",
   "contracts": {},
@@ -41,9 +42,10 @@ add the optimizer compiler settings inside of `"compiler"` key in `project.json`
       }
     }
   }
-}```
-
-* if you want to use a custom network, change settings in `networks.js` (rinkeby and ropsten have already been configured)
+}
+```
+### Network settings
+if you want to use a custom network, change settings in `networks.js` (rinkeby and ropsten have already been configured)
 
 # Compile contracts
 contracts source code is in `/contracts`, in order to compile them, run:
