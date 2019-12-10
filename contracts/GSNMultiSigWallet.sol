@@ -110,6 +110,7 @@ contract GSNMultiSigWallet is GSNRecipient {
     function initialize(address[] memory _owners, uint _required) public initializer
     validRequirement(_owners.length, _required)
     {
+        GSNRecipient.initialize();
         for (uint i=0; i<_owners.length; i++) {
             require(!isOwner[_owners[i]] && _owners[i] != address(0));
             isOwner[_owners[i]] = true;
@@ -405,16 +406,16 @@ contract GSNMultiSigWallet is GSNRecipient {
     // accept all requests
     function acceptRelayedCall(
         address,
-        address,
+        address from,
         bytes calldata,
-        uint256,
-        uint256,
+        uint256 transactionFee,
+        uint256 gasPrice,
         uint256,
         uint256,
         bytes calldata,
-        uint256
+        uint256 maxPossibleCharge
         ) external view returns (uint256, bytes memory) {
-        return _approveRelayedCall();
+        return _approveRelayedCall(abi.encode(from, maxPossibleCharge, transactionFee, gasPrice));
     }
 
     function _preRelayedCall(bytes memory context) internal returns (bytes32) {
