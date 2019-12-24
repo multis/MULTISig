@@ -1,4 +1,4 @@
-pragma solidity ^0.5.0;
+pragma solidity 0.5.13;
 
 import "@openzeppelin/contracts-ethereum-package/contracts/GSN/GSNRecipientERC20Fee.sol";
 import "@openzeppelin/contracts-ethereum-package/contracts/access/roles/MinterRole.sol";
@@ -12,6 +12,14 @@ contract GSNMultisigFactory is GSNRecipientERC20Fee, MinterRole, Ownable {
     event ContractInstantiation(address sender, address instantiation);
 
     function initialize(string memory name, string memory symbol) public initializer
+    {
+        GSNRecipientERC20Fee.initialize(name, symbol);
+        MinterRole.initialize(_msgSender());
+        Ownable.initialize(_msgSender());
+    }
+
+    constructor(string memory name, string memory symbol)
+        public
     {
         GSNRecipientERC20Fee.initialize(name, symbol);
         MinterRole.initialize(_msgSender());
@@ -32,8 +40,7 @@ contract GSNMultisigFactory is GSNRecipientERC20Fee, MinterRole, Ownable {
 
     function create(address[] memory _owners, uint _required, uint _dailyLimit) public returns (address wallet)
     {
-        GSNMultiSigWalletWithDailyLimit multisig = new GSNMultiSigWalletWithDailyLimit();
-        multisig.initialize(_owners, _required, _dailyLimit);
+        GSNMultiSigWalletWithDailyLimit multisig = new GSNMultiSigWalletWithDailyLimit(_owners, _required, _dailyLimit);
         wallet = address(multisig);
         deployedWallets.push(wallet);
 

@@ -11,6 +11,7 @@
     "@openzeppelin/gsn-helpers": "^0.2.0",
     "@openzeppelin/upgrades": "^2.5.3",
     "dotenv": "^8.1.0",
+    "run-with-testrpc": "^0.3.1",
     "truffle-hdwallet-provider": "^1.0.17"
   },
   "engines": {
