@@ -2,7 +2,59 @@
 
 A fork of gnosis multisigs to support the Gas Station Network (GSN)
 
-# Setup
+# Description
+In order to get an overview of the work being done here, please read this [todo: link to medium blog post about gasless]
+
+# Documentation
+The code is split in three parts:
+- A MULTISig smart contract
+
+A smart contract allowing multiple parties to agree on transactions before execution. Transactions can be executed only when confirmed by a predefined number of owners.
+- A MULTISig smart contract with daily limit
+
+Extends the previous smart contract by adding a new feature: the ability to set daily spending limits below which owners don't need confirmations.
+
+- A factory smart contract
+
+Allows for the creation of the previous smart contracts and keeps track of deployments.
+
+## GSN
+Discussed in the article cited above, the implementation of GSN serves two roles
+- allow for gasless deployments of the MULTISig smart contracts.
+- allow for gasless transactions from the deployed smart contracts.
+
+We relay on [OpenZeppelin]("https://gsn.openzeppelin.com/") for implementing our GSN contracts, in order to offer gasless deployments, the factory extends `GSNRecipientERC20Fee`  as our main payment strategy for the factory. (to learn more about the concept of a ERC20 fee Recipient payment strategy, please refer to the official documentation [here]("https://docs.openzeppelin.com/contracts/2.x/gsn-strategies#_how_to_use_gsnrecipienterc20fee"))
+
+The implementation of this payment strategy requires that we also extend `MinterRole`, in order to mint tokens that are going to be used for accepting relayed calls from GSN (you can read more about the other GSN payment strategies [here]("https://docs.openzeppelin.com/contracts/2.x/gsn-strategies")).
+
+In order to deploy a MULTISig smart contract, you need to call the `create` method, giving it a list of owner addresses, number of required confirmations for transactions, and finaly, the daily limit parameter discussed above. Uppon a successful call, this method will emit an `ContractInstantiation` event along with the address to which the contract has been deployed to.
+
+### Gasless deployments
+Given that your factory has enough funds in the Gas Station Netwok (discussed above in the GSN article, where you essentially deposit funds for an account at the corresponding RelayHub address for your network (mainnet, rinkeby, etc.)), you can offer gasless creation by offering your custom tokens to the account calling `create`, in order to do that, you first need to mint some tokens and then send them to the addresses you chose.
+
+You mint tokens by calling the `mint` public function and specifying the address to which you wish to mint tokens along with the number of tokens (in wei)
+
+In order to mint tokens, you need to be declared as a Minter, you do that by calling `addMinter` from the owner account that deployed the factory.
+
+### Summary
+- the factory extends `GSNRecipientERC20Fee` as a payment strategy
+- in order to deploy a contract you call `create`
+- address holding your custom minted tokens get to have gasless (free) deployments given your factory has enough funds in the Gas Station Network
+
+## GSN for MULTISigs
+Let's now discuss the GSN part when it comes to the actual MULTISigs. These two smart contracts extend `GSNRecipient`, effectively allowing them to join the Gas Station Network.
+
+In order to offer gasless transactions to owners, all you need to do is fund your deployed smart contract.
+
+In order to change the payment strategy, one needs to offer a different implementation to the `acceptRelayedCall` method, but since a multisignature smart contract is already protected by design to require confirmations for every transaction, there is no need for a complicated setup here, we decided to accept all relayed transactions given they will only be relayed if adhere to the multisignature requirements in the first place.
+
+# Tests
+Tests cover most operations and can be run using the provided `run_tests.sh` script.
+
+# Contributing
+If you want to contribute to this code, please follow the instructions below and send us a pull request.
+
+## Setup
 
 install npm dependencies
 
