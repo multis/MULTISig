@@ -39,7 +39,7 @@ In order to mint tokens, you need to be declared as a Minter, you do that by cal
 ### Summary
 - the factory extends `GSNRecipientERC20Fee` as a payment strategy
 - in order to deploy a contract you call `create`
-- address holding your custom minted tokens get to have gasless (free) deployments given your factory has enough funds in the Gas Station Network
+- addresses holding your custom minted tokens get to have gasless (free) deployments given your factory has enough funds in the Gas Station Network
 
 ## GSN for MULTISigs
 Let's now discuss the GSN part when it comes to the actual MULTISigs. These two smart contracts extend `GSNRecipient`, effectively allowing them to join the Gas Station Network.
