@@ -7,14 +7,14 @@ In order to get an overview of the work being done here, please read this [todo:
 
 # Documentation
 The code is split in three parts:
-- A MULTISig smart contract
+- A MULTISig smart contract implemented in `GSNMultiSigWallet.sol`
 
 A smart contract allowing multiple parties to agree on transactions before execution. Transactions can be executed only when confirmed by a predefined number of owners.
-- A MULTISig smart contract with daily limit
+- A MULTISig smart contract with daily limit implemented in `GSNMultiSigWalletWithDailyLimit.sol`
 
 Extends the previous smart contract by adding a new feature: the ability to set daily spending limits below which owners don't need confirmations.
 
-- A factory smart contract
+- A factory smart contract implemented in `GSNMultisigFactory.sol`
 
 Allows for the creation of the previous smart contracts and keeps track of deployments.
 
