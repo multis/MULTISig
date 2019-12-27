@@ -23,7 +23,7 @@ Discussed in the article cited above, the implementation of GSN serves two roles
 - allow for gasless deployments of the MULTISig smart contracts.
 - allow for gasless transactions from the deployed smart contracts.
 
-We relay on [OpenZeppelin](https://gsn.openzeppelin.com/) for implementing our GSN contracts, in order to offer gasless deployments, the factory extends `GSNRecipientERC20Fee`  as our main payment strategy for the factory. (to learn more about the concept of a ERC20 fee Recipient payment strategy, please refer to the official documentation [here](https://docs.openzeppelin.com/contracts/2.x/gsn-strategies#_how_to_use_gsnrecipienterc20fee))
+We rely on [OpenZeppelin](https://gsn.openzeppelin.com/) for implementing our GSN contracts, in order to offer gasless deployments, the factory extends `GSNRecipientERC20Fee`  as our main payment strategy for the factory. (to learn more about the concept of a ERC20 fee Recipient payment strategy, please refer to the official documentation [here](https://docs.openzeppelin.com/contracts/2.x/gsn-strategies#_how_to_use_gsnrecipienterc20fee))
 
 The implementation of this payment strategy requires that we also extend `MinterRole`, in order to mint tokens that are going to be used for accepting relayed calls from GSN (you can read more about the other GSN payment strategies [here](https://docs.openzeppelin.com/contracts/2.x/gsn-strategies)).
 
