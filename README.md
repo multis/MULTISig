@@ -46,7 +46,7 @@ Let's now discuss the GSN part when it comes to the actual MULTISigs. These two 
 
 In order to offer gasless transactions to owners, all you need to do is fund your deployed smart contract.
 
-In order to change the payment strategy, one needs to offer a different implementation to the `acceptRelayedCall` method, but since a multisignature smart contract is already protected by design to require confirmations for every transaction, there is no need for a complicated setup here, we decided to accept all relayed transactions given they will only be relayed if adhere to the multisignature requirements in the first place.
+In order to change the payment strategy, one needs to offer a different implementation to the `acceptRelayedCall` method, but since a multisignature smart contract is already protected by design to require confirmations for every transaction, there is no need for a complicated setup here, we decided to accept all relayed transactions, given they can only be relayed if they adhere to the multisignature requirements in the first place.
 
 # Tests
 Tests cover most operations and can be run using the provided `run_tests.sh` script.
