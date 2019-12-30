@@ -36,8 +36,7 @@ contract GSNMultiSigWalletWithDailyLimit is GSNMultiSigWallet {
     constructor(address[] memory _owners, uint _required, uint _dailyLimit)
         public
     {
-        GSNMultiSigWallet.initialize(_owners, _required);
-        dailyLimit = _dailyLimit;
+        initialize(_owners, _required, _dailyLimit);
     }
 
     /// @dev Allows to change the daily limit. Transaction has to be sent by wallet.
