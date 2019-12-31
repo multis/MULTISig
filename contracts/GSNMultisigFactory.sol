@@ -1,4 +1,4 @@
-pragma solidity ^0.5.0;
+pragma solidity 0.5.13;
 
 import "@openzeppelin/contracts-ethereum-package/contracts/GSN/GSNRecipientERC20Fee.sol";
 import "@openzeppelin/contracts-ethereum-package/contracts/access/roles/MinterRole.sol";
@@ -7,7 +7,8 @@ import "@openzeppelin/contracts-ethereum-package/contracts/ownership/Ownable.sol
 import "./GSNMultiSigWalletWithDailyLimit.sol";
 
 contract GSNMultisigFactory is GSNRecipientERC20Fee, MinterRole, Ownable {
-    address[] deployedWallets;
+    mapping(address => address[]) public deployedWallets;
+    mapping(address => bool) public isMULTISigWallet;
 
     event ContractInstantiation(address sender, address instantiation);
 
@@ -18,6 +19,12 @@ contract GSNMultisigFactory is GSNRecipientERC20Fee, MinterRole, Ownable {
         Ownable.initialize(_msgSender());
     }
 
+    constructor(string memory name, string memory symbol)
+        public
+    {
+        initialize(name, symbol);
+    }
+
     function mint(address account, uint256 amount) public onlyMinter {
         _mint(account, amount);
     }
@@ -26,16 +33,22 @@ contract GSNMultisigFactory is GSNRecipientERC20Fee, MinterRole, Ownable {
         _removeMinter(account);
     }
 
-    function getDeployedWallets() public view returns(address[] memory) {
-        return deployedWallets;
+    /*
+     * Public functions
+     */
+    /// @dev Returns number of instantiations by creator.
+    /// @param creator Contract creator.
+    /// @return Returns number of instantiations by creator.
+    function getDeployedWalletsCount(address creator) public view returns(uint) {
+        return deployedWallets[creator].length;
     }
 
     function create(address[] memory _owners, uint _required, uint _dailyLimit) public returns (address wallet)
     {
-        GSNMultiSigWalletWithDailyLimit multisig = new GSNMultiSigWalletWithDailyLimit();
-        multisig.initialize(_owners, _required, _dailyLimit);
+        GSNMultiSigWalletWithDailyLimit multisig = new GSNMultiSigWalletWithDailyLimit(_owners, _required, _dailyLimit);
         wallet = address(multisig);
-        deployedWallets.push(wallet);
+        isMULTISigWallet[wallet] = true;
+        deployedWallets[_msgSender()].push(wallet);
 
         emit ContractInstantiation(_msgSender(), wallet);
     }

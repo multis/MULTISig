@@ -1,4 +1,4 @@
-pragma solidity ^0.5.0;
+pragma solidity 0.5.13;
 
 import "./GSNMultiSigWallet.sol";
 
@@ -33,12 +33,11 @@ contract GSNMultiSigWalletWithDailyLimit is GSNMultiSigWallet {
         dailyLimit = _dailyLimit;
     }
 
-    // constructor(address[] memory _owners, uint _required, uint _dailyLimit)
-    //     public
-    //     GSNMultiSigWallet(_owners, _required)
-    // {
-    //     dailyLimit = _dailyLimit;
-    // }
+    constructor(address[] memory _owners, uint _required, uint _dailyLimit)
+        public
+    {
+        initialize(_owners, _required, _dailyLimit);
+    }
 
     /// @dev Allows to change the daily limit. Transaction has to be sent by wallet.
     /// @param _dailyLimit Amount in wei.
