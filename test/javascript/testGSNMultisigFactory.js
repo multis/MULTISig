@@ -1,26 +1,37 @@
-const GSNMultisigFactory = artifacts.require('GSNMultisigFactory');
-const GSNMultiSigWalletWithDailyLimit = artifacts.require('GSNMultiSigWalletWithDailyLimit');
-const web3 = GSNMultisigFactory.web3;
-
 const utils = require('./utils');
+const { TestHelper } = require('@openzeppelin/cli');
+const { Contracts, ZWeb3 } = require('@openzeppelin/upgrades');
 
-contract('GSNMultisigFactory', (accounts) => {
-  let factoryInstance, walletAddress, multisigInstance
+global.web3 = web3;
+ZWeb3.initialize(web3.currentProvider);
+
+const GSNMultiSigWalletWithDailyLimit = Contracts.getFromLocal('GSNMultiSigWalletWithDailyLimit');
+const GSNMultisigFactory = Contracts.getFromLocal('GSNMultisigFactory');
+const GAS = 9721975
+
+describe('GSNMultisigFactory', () => {
+  let factoryInstance, walletAddress, multisigInstance, accounts
   const dailyLimit = web3.utils.toWei("3", "ether")
   const requiredConfirmations = 2
 
   beforeEach(async () => {
-    factoryInstance = await GSNMultisigFactory.new("Crypto token", "cdt")
+    accounts = await ZWeb3.accounts();
+    this.project = await TestHelper();
+    factoryInstance = await this.project.createProxy(GSNMultisigFactory, {
+      initMethod: 'initialize',
+      initArgs: ["Crypto token", "cdt"]
+    });
+
     assert.ok(factoryInstance)
   })
 
   it('Create contract from factory', async () => {
-    const tx = await factoryInstance.create([accounts[0], accounts[1]], requiredConfirmations, dailyLimit)
+    const tx = await factoryInstance.methods.create([accounts[0], accounts[1]], requiredConfirmations, dailyLimit).send({ from: accounts[0], gas: GAS })
     walletAddress = utils.getParamFromTxEvent(tx, 'instantiation', null, 'ContractInstantiation')
-    const walletCount = await factoryInstance.getDeployedWalletsCount(accounts[0])
-    const multisigWalletAddress = await factoryInstance.deployedWallets(accounts[0], walletCount - 1)
+    const walletCount = await factoryInstance.methods.getDeployedWalletsCount(accounts[0]).call()
+    const multisigWalletAddress = await factoryInstance.methods.deployedWallets(accounts[0], walletCount - 1).call()
     assert.equal(walletAddress, multisigWalletAddress)
-    assert.ok(factoryInstance.isMULTISigWallet(walletAddress))
+    assert.ok(await factoryInstance.methods.isMULTISigWallet(walletAddress).call())
   })
 
   it('Send money to contract', async () => {
@@ -30,21 +41,21 @@ contract('GSNMultisigFactory', (accounts) => {
     await web3.eth.sendTransaction({ to: walletAddress, value: deposit, from: accounts[0] })
     const balance = await utils.balanceOf(web3, walletAddress)
     assert.equal(balance.valueOf(), deposit)
-    assert.equal(dailyLimit, await multisigInstance.dailyLimit())
-    assert.equal(dailyLimit, await multisigInstance.calcMaxWithdraw())
+    assert.equal(dailyLimit, await multisigInstance.methods.dailyLimit().call())
+    assert.equal(dailyLimit, await multisigInstance.methods.calcMaxWithdraw().call())
   })
 
   it('Update daily limit', async () => {
     // Update daily limit
     const dailyLimitUpdated = 2000
-    const dailyLimitEncoded = multisigInstance.contract.methods.changeDailyLimit(dailyLimitUpdated).encodeABI()
+    const dailyLimitEncoded = multisigInstance.methods.changeDailyLimit(dailyLimitUpdated).encodeABI()
     const transactionId = utils.getParamFromTxEvent(
-      await multisigInstance.submitTransaction(multisigInstance.address, 0, dailyLimitEncoded, { from: accounts[0] }),
+      await multisigInstance.methods.submitTransaction(multisigInstance.options.address, 0, dailyLimitEncoded).send({ from: accounts[0], gas: GAS }),
       'transactionId', null, 'Submission'
     )
 
-    await multisigInstance.confirmTransaction(transactionId, { from: accounts[1] })
-    assert.equal(dailyLimitUpdated, (await multisigInstance.dailyLimit()).toNumber())
-    assert.equal(dailyLimitUpdated, (await multisigInstance.calcMaxWithdraw()).toNumber())
+    await multisigInstance.methods.confirmTransaction(transactionId).send({ from: accounts[1], gas: GAS })
+    assert.equal(dailyLimitUpdated, (await multisigInstance.methods.dailyLimit().call()))
+    assert.equal(dailyLimitUpdated, (await multisigInstance.methods.calcMaxWithdraw().call()))
   })
 })

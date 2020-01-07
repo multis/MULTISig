@@ -12,17 +12,13 @@ contract GSNMultisigFactory is GSNRecipientERC20Fee, MinterRole, Ownable {
 
     event ContractInstantiation(address sender, address instantiation);
 
-    function initialize(string memory name, string memory symbol) public initializer
+   
+
+    function initialize(string memory name, string memory symbol) initializer public 
     {
         GSNRecipientERC20Fee.initialize(name, symbol);
         MinterRole.initialize(_msgSender());
         Ownable.initialize(_msgSender());
-    }
-
-    constructor(string memory name, string memory symbol)
-        public
-    {
-        initialize(name, symbol);
     }
 
     function mint(address account, uint256 amount) public onlyMinter {
@@ -45,7 +41,8 @@ contract GSNMultisigFactory is GSNRecipientERC20Fee, MinterRole, Ownable {
 
     function create(address[] memory _owners, uint _required, uint _dailyLimit) public returns (address wallet)
     {
-        GSNMultiSigWalletWithDailyLimit multisig = new GSNMultiSigWalletWithDailyLimit(_owners, _required, _dailyLimit);
+        GSNMultiSigWalletWithDailyLimit multisig = new GSNMultiSigWalletWithDailyLimit();
+        multisig.initialize(_owners, _required, _dailyLimit);
         wallet = address(multisig);
         isMULTISigWallet[wallet] = true;
         deployedWallets[_msgSender()].push(wallet);
