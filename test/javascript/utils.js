@@ -1,11 +1,11 @@
 function getParamFromTxEvent(transaction, paramName, contractFactory, eventName) {
   assert.isObject(transaction)
-  let logs = transaction.logs
+  let logs = transaction.events
   if (eventName != null) {
-    logs = logs.filter((l) => l.event === eventName)
+    logs = transaction.events[eventName]
   }
-  assert.equal(logs.length, 1, 'too many logs found!')
-  let param = logs[0].args[paramName]
+  assert.isObject(logs, 'log not found!')
+  let param = logs["returnValues"][paramName]
   if (contractFactory != null) {
     let contract = contractFactory.at(param)
     assert.isObject(contract, `getting ${paramName} failed for ${param}`)

@@ -33,12 +33,6 @@ contract GSNMultiSigWalletWithDailyLimit is GSNMultiSigWallet {
         dailyLimit = _dailyLimit;
     }
 
-    constructor(address[] memory _owners, uint _required, uint _dailyLimit)
-        public
-    {
-        initialize(_owners, _required, _dailyLimit);
-    }
-
     /// @dev Allows to change the daily limit. Transaction has to be sent by wallet.
     /// @param _dailyLimit Amount in wei.
     function changeDailyLimit(uint _dailyLimit)
