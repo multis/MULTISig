@@ -109,7 +109,7 @@ contracts will be available in `build/contracts/*.json`
 
 # Deploy contracts to Ethereum
 ```
-$ openzeppelin create ContractName --network network-name
+$ oz create ContractName --network network-name
 ```
 
 Example:
@@ -149,9 +149,9 @@ $ oz send-tx --network rinkeby
 ### On ganache
 ```bash
 # run ganache in a separate terminal
-$ ganache-cli
+$ npx ganache-cli
 # compile contracts and write down the deployed address
-$ openzepplin create
+$ oz create --network development
 # deploy a local GSN (RelayHub + relayers)
 # this step is not necessary if testing on rinkby or mainnet, GSN already exists there
 $ npx oz-gsn run-relayer

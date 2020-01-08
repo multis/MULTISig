@@ -12,8 +12,6 @@ contract GSNMultisigFactory is GSNRecipientERC20Fee, MinterRole, Ownable {
 
     event ContractInstantiation(address sender, address instantiation);
 
-   
-
     function initialize(string memory name, string memory symbol) initializer public 
     {
         GSNRecipientERC20Fee.initialize(name, symbol);
