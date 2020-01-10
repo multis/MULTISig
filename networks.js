@@ -1,23 +1,39 @@
-require('dotenv').config();
+require("dotenv").config();
 
-const HDWalletProvider = require('truffle-hdwallet-provider');
+const HDWalletProvider = require("truffle-hdwallet-provider");
 const infuraProjectId = process.env.INFURA_PROJECT_ID;
 
 module.exports = {
   networks: {
     development: {
-      protocol: 'http',
-      host: 'localhost',
+      protocol: "http",
+      host: "localhost",
       port: 8545,
-      networkId: '*',
+      networkId: "*"
     },
     rinkeby: {
-      provider: () => new HDWalletProvider(process.env.DEV_MNEMONIC, "https://rinkeby.infura.io/v3/" + infuraProjectId),
+      provider: () =>
+        new HDWalletProvider(
+          process.env.DEV_MNEMONIC,
+          "https://rinkeby.infura.io/v3/" + infuraProjectId
+        ),
       networkId: 4
     },
     ropsten: {
-      provider: () => new HDWalletProvider(process.env.DEV_MNEMONIC, "https://ropsten.infura.io/v3/" + infuraProjectId),
-      networkId: 3,
+      provider: () =>
+        new HDWalletProvider(
+          process.env.DEV_MNEMONIC,
+          "https://ropsten.infura.io/v3/" + infuraProjectId
+        ),
+      networkId: 3
     },
-  },
+    mainnet: {
+      provider: () =>
+        new HDWalletProvider(
+          process.env.DEV_MNEMONIC,
+          "https://mainnet.infura.io/v3/" + infuraProjectId
+        ),
+      networkId: 1
+    }
+  }
 };
