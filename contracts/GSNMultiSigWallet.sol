@@ -98,7 +98,9 @@ contract GSNMultiSigWallet is GSNRecipient {
         payable
     {
         if (msg.value > 0)
-            emit Deposit(_msgSender(), msg.value);
+            // msg.sender safe to use instead of _msgSender()
+            // because fallback never called by RelayHub directly
+            emit Deposit(msg.sender, msg.value);
     }
 
     /*
