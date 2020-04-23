@@ -52,9 +52,17 @@ async function assertThrowsAsynchronously(test, error) {
   throw new Error("Missing rejection" + (error ? " with " + error.name : ""));
 }
 
+function parseRawLog(log, input, isAnonymous=false) {
+  let data = log.raw.data;
+  let topics = log.raw.topics;
+  if(!isAnonymous) topics.shift(); // Remove topics[0] if the function isn't anonymous (https://web3js.readthedocs.io/en/v1.2.0/web3-eth-abi.html#decodelog)
+  return web3.eth.abi.decodeLog(input, data, topics);
+}
+
 Object.assign(exports, {
   getParamFromTxEvent,
   increaseTimestamp,
   balanceOf,
   assertThrowsAsynchronously,
+  parseRawLog,
 })

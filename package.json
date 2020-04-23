@@ -13,7 +13,7 @@
     "dotenv": "^8.1.0",
     "@openzeppelin/cli": "2.6.0",
     "truffle-hdwallet-provider": "^1.0.17",
-    "ganache-cli": "6.7.0"
+    "ganache-cli": "6.9.1"
   },
   "engines": {
     "node": "11.2.0"
