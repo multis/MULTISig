@@ -49,9 +49,16 @@ describe('GSNMultisigFactory', () => {
     const DumbTransfer = Contracts.getFromLocal('DumbTransfer')
     const dumbTransferInstance = await DumbTransfer.new({from: accounts[0], gas: GAS})
     const transferAmount = web3.utils.toWei("1", "ether")
-    await dumbTransferInstance.methods.transfer(walletAddress).send({from: accounts[0], value: transferAmount, gas: GAS})
+    const tx = await dumbTransferInstance.methods.transfer(walletAddress).send({from: accounts[0], value: transferAmount, gas: GAS})
+
     const balance = await utils.balanceOf(web3, walletAddress)
     assert.equal(balance.valueOf(), web3.utils.toWei("2", "ether"))
+
+    const log = utils.parseRawLog(tx.events[0],
+      [{"indexed":true,"internalType":"address","name":"sender","type":"address"},
+       {"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}]);
+    assert.equal(log.sender, dumbTransferInstance.address)
+    assert.equal(log.value, transferAmount)
   })
 
   it('Update daily limit', async () => {
