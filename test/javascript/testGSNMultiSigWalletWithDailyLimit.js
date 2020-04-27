@@ -1,6 +1,10 @@
 const { TestHelper } = require('@openzeppelin/cli');
 const { Contracts, ZWeb3 } = require('@openzeppelin/upgrades');
 
+if (process.env.SOLIDITY_COVERAGE) {
+    Contracts.setLocalBuildDir("./.coverage_artifacts/contracts");
+  }
+
 global.web3 = web3;
 ZWeb3.initialize(web3.currentProvider);
 
