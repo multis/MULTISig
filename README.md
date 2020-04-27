@@ -3,7 +3,7 @@
 A fork of gnosis multisigs to support the Gas Station Network (GSN)
 
 # Description
-In order to get an overview of the work being done here, please read this [todo: link to medium blog post about gasless]
+In order to get an overview of the work being done here, please read this: https://medium.com/multis/gasless-multisig-1effc4700aad?source=friends_link&sk=951b729605095bc70a24593c8bb083dc
 
 # Documentation
 The code is split in three parts:
@@ -27,7 +27,7 @@ We rely on [OpenZeppelin](https://gsn.openzeppelin.com/) for implementing our GS
 
 The implementation of this payment strategy requires that we also extend `MinterRole`, in order to mint tokens that are going to be used for accepting relayed calls from GSN (you can read more about the other GSN payment strategies [here](https://docs.openzeppelin.com/contracts/2.x/gsn-strategies)).
 
-In order to deploy a MULTISig smart contract, you need to call the `create` method, giving it a list of owner addresses, number of required confirmations for transactions, and finaly, the daily limit parameter discussed above. Uppon a successful call, this method will emit an `ContractInstantiation` event along with the address to which the contract has been deployed to.
+In order to deploy a MULTISig smart contract, you need to call the `create` method, giving it a list of owner addresses, number of required confirmations for transactions, and finally, the daily limit parameter discussed above. Uppon a successful call, this method will emit an `ContractInstantiation` event along with the address to which the contract has been deployed to.
 
 ### Gasless deployments
 Given that your factory has enough funds in the Gas Station Netwok (discussed above in the GSN article, where you essentially deposit funds for an account at the corresponding RelayHub address for your network (mainnet, rinkeby, etc.)), you can offer gasless creation by offering your custom tokens to the account calling `create`, in order to do that, you first need to mint some tokens and then send them to the addresses you chose.
