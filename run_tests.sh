@@ -11,5 +11,6 @@ trap 'kill $!' EXIT
 # npx ganache-cli --allowUnlimitedContractSize --gasLimit=97219750 > /dev/null &
 # npx truffle test test/javascript/testGSNMultisigFactory.js
 # npx truffle test test/javascript/testGSNMultiSigWalletWithDailyLimit.js
+# npx truffle test test/javascript/testGSNMultiSigWallet.js
 
 export SOLIDITY_COVERAGE=true && truffle run coverage --network=development

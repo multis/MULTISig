@@ -11,6 +11,7 @@ ZWeb3.initialize(web3.currentProvider);
 
 const GSNMultiSigWalletWithDailyLimit = Contracts.getFromLocal('GSNMultiSigWalletWithDailyLimit');
 const GSNMultisigFactory = Contracts.getFromLocal('GSNMultisigFactory');
+const ERC20 = Contracts.getFromLocal('ERC20')
 const GAS = 9721975
 
 describe('GSNMultisigFactory', () => {
@@ -27,6 +28,18 @@ describe('GSNMultisigFactory', () => {
     });
 
     assert.ok(factoryInstance)
+  })
+
+  it('Add minter, mint and remove minter', async () => {
+    await factoryInstance.methods.addMinter(accounts[1]).send({from: accounts[0], gas: GAS})
+    assert.isTrue((await factoryInstance.methods.isMinter(accounts[1]).call()))
+
+    await factoryInstance.methods.mint(accounts[2], 42).send({from: accounts[1], gas: GAS})
+    const tokenAddr = await factoryInstance.methods.token().call()
+    assert.equal(42, (await ERC20.at(tokenAddr).methods.balanceOf(accounts[2]).call()))
+
+    await factoryInstance.methods.removeMinter(accounts[1]).send({from: accounts[0], gas: GAS})
+    assert.isFalse((await factoryInstance.methods.isMinter(accounts[1]).call()))
   })
 
   it('Create contract from factory', async () => {
