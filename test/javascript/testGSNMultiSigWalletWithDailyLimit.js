@@ -1,6 +1,10 @@
 const { TestHelper } = require('@openzeppelin/cli');
 const { Contracts, ZWeb3 } = require('@openzeppelin/upgrades');
 
+if (process.env.SOLIDITY_COVERAGE) {
+    Contracts.setLocalBuildDir("./.coverage_artifacts/contracts");
+  }
+
 global.web3 = web3;
 ZWeb3.initialize(web3.currentProvider);
 
@@ -62,8 +66,8 @@ describe('GSNMultiSigWalletWithDailyLimit', () => {
     })
 
     it('update daily limit', async () => {
+        await multisigInstance.methods.submitTransaction(accounts[0], web3.utils.toWei("3", "ether"), '0x').send({ from: accounts[1], gas: GAS })
         const dailyLimitUpdated = web3.utils.toWei("2", "ether");
-        await multisigInstance.methods.submitTransaction(accounts[0], dailyLimitUpdated, '0x').send({ from: accounts[1], gas: GAS })
         const dailyLimitEncoded = multisigInstance.methods.changeDailyLimit(dailyLimitUpdated).encodeABI();
         const transactionId = utils.getParamFromTxEvent(
             await multisigInstance.methods.submitTransaction(multisigInstance.options.address, 0, dailyLimitEncoded).send({ from: accounts[1], gas: GAS }),

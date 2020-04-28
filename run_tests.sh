@@ -8,7 +8,9 @@ npx truffle compile
 # start an instance of ganache-cli, trap it in a background job
 # redirect its output to /dev/null and kill it on exit
 trap 'kill $!' EXIT
-npx ganache-cli --allowUnlimitedContractSize --gasLimit=97219750 > /dev/null &
+# npx ganache-cli --allowUnlimitedContractSize --gasLimit=97219750 > /dev/null &
+# npx truffle test test/javascript/testGSNMultisigFactory.js
+# npx truffle test test/javascript/testGSNMultiSigWalletWithDailyLimit.js
+# npx truffle test test/javascript/testGSNMultiSigWallet.js
 
-npx truffle test test/javascript/testGSNMultisigFactory.js
-npx truffle test test/javascript/testGSNMultiSigWalletWithDailyLimit.js
+export SOLIDITY_COVERAGE=true && truffle run coverage --network=development
