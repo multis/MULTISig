@@ -410,6 +410,7 @@ contract GSNMultiSigWallet is GSNRecipient {
     }
 
     function _preRelayedCall(bytes memory context) internal returns (bytes32) {
+        return "";
     }
 
     function _postRelayedCall(bytes memory context, bool, uint256 actualCharge, bytes32) internal {
