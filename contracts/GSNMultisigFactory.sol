@@ -53,5 +53,5 @@ contract GSNMultisigFactory is GSNRecipientERC20Fee, MinterRole, Ownable {
         deployedWallets[_msgSender()].push(wallet);
 
         emit ContractInstantiation(_msgSender(), wallet);
-    }cc
+    }
 }
