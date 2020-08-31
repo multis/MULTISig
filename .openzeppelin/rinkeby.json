@@ -1,0 +1,192 @@
+{
+  "contracts": {
+    "GSNMultisigFactory": {
+      "address": "0xd9C361768D4bd520bE6042CDB8643841862d7456",
+      "constructorCode": "6080604052615973806100136000396000f3fe",
+      "bodyBytecodeHash": "63a50889c63148df6d020d785015ee1bfdf72c0b8bb43e3c1ebdbafd18fc8f9b",
+      "localBytecodeHash": "a739d513deba7993b484e3ff966fe84b2fc874768cb45f6686491d08b53b4852",
+      "deployedBytecodeHash": "a739d513deba7993b484e3ff966fe84b2fc874768cb45f6686491d08b53b4852",
+      "types": {
+        "t_bool": {
+          "id": "t_bool",
+          "kind": "elementary",
+          "label": "bool"
+        },
+        "t_uint256": {
+          "id": "t_uint256",
+          "kind": "elementary",
+          "label": "uint256"
+        },
+        "t_array:50<t_uint256>": {
+          "id": "t_array:50<t_uint256>",
+          "valueType": "t_uint256",
+          "length": "50",
+          "kind": "array",
+          "label": "uint256[50]"
+        },
+        "t_address": {
+          "id": "t_address",
+          "kind": "elementary",
+          "label": "address"
+        },
+        "t_struct<Roles.Role>": {
+          "id": "t_struct<Roles.Role>",
+          "kind": "struct",
+          "label": "Roles.Role",
+          "members": [
+            {
+              "label": "bearer",
+              "astId": 1068,
+              "type": "t_mapping<t_bool>",
+              "src": "150:32:5"
+            }
+          ]
+        },
+        "t_mapping<t_bool>": {
+          "id": "t_mapping<t_bool>",
+          "valueType": "t_bool",
+          "label": "mapping(key => bool)",
+          "kind": "mapping"
+        },
+        "t_array:dyn<t_address>": {
+          "id": "t_array:dyn<t_address>",
+          "valueType": "t_address",
+          "length": "dyn",
+          "kind": "array",
+          "label": "address[]"
+        },
+        "t_mapping<t_array:dyn<t_address>>": {
+          "id": "t_mapping<t_array:dyn<t_address>>",
+          "valueType": "t_array:dyn<t_address>",
+          "label": "mapping(key => address[])",
+          "kind": "mapping"
+        }
+      },
+      "storage": [
+        {
+          "contract": "Initializable",
+          "path": "@openzeppelin/upgrades/contracts/Initializable.sol",
+          "label": "initialized",
+          "astId": 2504,
+          "type": "t_bool",
+          "src": "757:24:15"
+        },
+        {
+          "contract": "Initializable",
+          "path": "@openzeppelin/upgrades/contracts/Initializable.sol",
+          "label": "initializing",
+          "astId": 2506,
+          "type": "t_bool",
+          "src": "876:25:15"
+        },
+        {
+          "contract": "Initializable",
+          "path": "@openzeppelin/upgrades/contracts/Initializable.sol",
+          "label": "______gap",
+          "astId": 2562,
+          "type": "t_array:50<t_uint256>",
+          "src": "1951:29:15"
+        },
+        {
+          "contract": "GSNRecipient",
+          "path": "@openzeppelin/contracts-ethereum-package/contracts/GSN/GSNRecipient.sol",
+          "label": "_relayHub",
+          "astId": 67,
+          "type": "t_address",
+          "src": "1133:25:1"
+        },
+        {
+          "contract": "GSNRecipientERC20Fee",
+          "path": "@openzeppelin/contracts-ethereum-package/contracts/GSN/GSNRecipientERC20Fee.sol",
+          "label": "_token",
+          "astId": 410,
+          "type": "t_address",
+          "src": "1140:44:2"
+        },
+        {
+          "contract": "MinterRole",
+          "path": "@openzeppelin/contracts-ethereum-package/contracts/access/roles/MinterRole.sol",
+          "label": "_minters",
+          "astId": 1165,
+          "type": "t_struct<Roles.Role>",
+          "src": "327:27:6"
+        },
+        {
+          "contract": "MinterRole",
+          "path": "@openzeppelin/contracts-ethereum-package/contracts/access/roles/MinterRole.sol",
+          "label": "______gap",
+          "astId": 1265,
+          "type": "t_array:50<t_uint256>",
+          "src": "1193:29:6"
+        },
+        {
+          "contract": "Ownable",
+          "path": "@openzeppelin/contracts-ethereum-package/contracts/ownership/Ownable.sol",
+          "label": "_owner",
+          "astId": 1463,
+          "type": "t_address",
+          "src": "526:22:8"
+        },
+        {
+          "contract": "Ownable",
+          "path": "@openzeppelin/contracts-ethereum-package/contracts/ownership/Ownable.sol",
+          "label": "______gap",
+          "astId": 1576,
+          "type": "t_array:50<t_uint256>",
+          "src": "2471:29:8"
+        },
+        {
+          "contract": "GSNMultisigFactory",
+          "path": "contracts/GSNMultisigFactory.sol",
+          "label": "deployedWallets",
+          "astId": 3887,
+          "type": "t_mapping<t_array:dyn<t_address>>",
+          "src": "416:52:19"
+        },
+        {
+          "contract": "GSNMultisigFactory",
+          "path": "contracts/GSNMultisigFactory.sol",
+          "label": "isMULTISigWallet",
+          "astId": 3891,
+          "type": "t_mapping<t_bool>",
+          "src": "474:48:19"
+        }
+      ],
+      "warnings": {
+        "hasConstructor": false,
+        "hasSelfDestruct": false,
+        "hasDelegateCall": false,
+        "hasInitialValuesInDeclarations": false,
+        "uninitializedBaseContracts": [],
+        "storageUncheckedVars": [
+          {
+            "contract": "MinterRole",
+            "path": "@openzeppelin/contracts-ethereum-package/contracts/access/roles/MinterRole.sol",
+            "label": "_minters",
+            "astId": 1165,
+            "type": "t_struct<Roles.Role>",
+            "src": "327:27:6"
+          }
+        ],
+        "storageDiff": []
+      }
+    }
+  },
+  "solidityLibs": {},
+  "proxies": {
+    "MULTISig/GSNMultisigFactory": [
+      {
+        "address": "0x64C50306e1061C76D00AA7920484d87f90f8DD5F",
+        "version": "1.0.0",
+        "implementation": "0xd9C361768D4bd520bE6042CDB8643841862d7456",
+        "admin": "0xc51A4015137b356e4BfaE1A22f8c8760f4B84D8C",
+        "kind": "Upgradeable"
+      }
+    ]
+  },
+  "manifestVersion": "2.2",
+  "version": "1.0.0",
+  "proxyAdmin": {
+    "address": "0xc51A4015137b356e4BfaE1A22f8c8760f4B84D8C"
+  }
+}

@@ -1,7 +1,11 @@
 node_modules
 .DS_Store
 .shadow-cljs
-.openzeppelin
+.openzeppelin/*
+!.openzeppelin/mainnet.json
+!.openzeppelin/rinkeby.json
+!.openzeppelin/project.json
+
 # local env variables
 .env
 

@@ -1,0 +1,25 @@
+{
+  "manifestVersion": "2.2",
+  "contracts": {
+    "GSNMultisigFactory": "GSNMultisigFactory"
+  },
+  "dependencies": {},
+  "name": "MULTISig",
+  "version": "1.0.0",
+  "compiler": {
+    "manager": "openzeppelin",
+    "solcVersion": "0.5.13",
+    "compilerSettings": {
+      "optimizer": {
+        "enabled": true,
+        "runs": "200"
+      }
+    },
+    "artifactsDir": "build/contracts",
+    "contractsDir": "contracts",
+    "typechain": {
+      "enabled": false
+    }
+  },
+  "telemetryOptIn": true
+}
