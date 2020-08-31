@@ -15,7 +15,8 @@
     "truffle-hdwallet-provider": "^1.0.17",
     "solidity-coverage": "0.7.0",
     "ganache-cli": "6.9.1",
-    "truffle": "5.1.17"
+    "truffle": "5.1.17",
+    "hardlydifficult-ethereum-contracts": "^0.11.1"
   },
   "engines": {
     "node": "11.2.0"
